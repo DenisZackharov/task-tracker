@@ -41,10 +41,10 @@ blocks:
     task:
       prologue:
         commands:
+          - sem-version ruby 3.0.3
           - bundle install ${BUNDLE_ARGS}
           - sem-service start postgres
-          - sem-version ruby 3.0.3
-          - bundle exec rake db:setup
+          - bin/rails db:setup
       jobs:
       - name: Unit
         commands:
