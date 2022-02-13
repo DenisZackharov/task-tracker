@@ -22,8 +22,8 @@ blocks:
   - name: Setup
     task:
       jobs:
-        - name: bundle
-          commands:
+      - name: bundle
+        commands:
           - sem-version ruby 3.0.3
           - bundle install ${BUNDLE_ARGS}
           - cache store
@@ -31,11 +31,11 @@ blocks:
   - name: Quality
     task:
       jobs:
-        - name: quality
-          commands:
-            - bundle install ${BUNDLE_ARGS}
-            - sem-version ruby 3.0.3
-            - bin/quality
+      - name: quality
+        commands:
+          - bundle install ${BUNDLE_ARGS}
+          - sem-version ruby 3.0.3
+          - bin/quality
 
   - name: Tests
     task:
@@ -44,7 +44,7 @@ blocks:
           - sem-version ruby 3.0.3
           - bundle install ${BUNDLE_ARGS}
           - sem-service start postgres
-          - "bin/rails db:setup"
+          - bin/rails db:setup
       jobs:
       - name: Unit
         commands:
