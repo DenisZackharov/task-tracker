@@ -44,7 +44,7 @@ blocks:
           - sem-version ruby 3.0.3
           - bundle install ${BUNDLE_ARGS}
           - sem-service start postgres
-          - bin/rails db:setup
+          - "bin/rails db:setup"
       jobs:
       - name: Unit
         commands:
