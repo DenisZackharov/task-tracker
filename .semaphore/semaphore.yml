@@ -30,20 +30,18 @@ blocks:
 
   - name: Quality
     task:
-      prologue:
-        commands:
-          - cache restore
       jobs:
         - name: quality
           commands:
+            - bundle install ${BUNDLE_ARGS}
             - sem-version ruby 3.0.3
             - bin/quality
 
   - name: Tests
     task:
       prologue:
-        commands: 
-          - cache restore
+        commands:
+          - bundle install ${BUNDLE_ARGS}
           - sem-service start postgres
           - sem-version ruby 3.0.3
           - bundle exec rake db:setup
