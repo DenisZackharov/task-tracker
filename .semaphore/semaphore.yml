@@ -4,36 +4,44 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+execution_time_limit:
+  hours: 1
+
+global_job_config:
+  env_vars:
+    - name: RAILS_ENV
+      value: test
+    - name: BUNDLE_ARGS
+      value: --deployment -j 4 --path vendor/bundle
+  prologue:
+    commands:
+      - checkout
+      - cache restore
+
 blocks:
   - name: Setup
     task:
       jobs:
         - name: bundle
           commands:
-          - checkout
-          - cache restore
-          - sem-version ruby 3.0.2
-          - bundle install --deployment -j 4 --path vendor/bundle
+          - sem-version ruby 3.0.3
+          - bundle install ${BUNDLE_ARGS}
           - cache store
+
   - name: Quality
     task:
       jobs:
-        - name: check style + security
+        - name: quality
           commands:
-            - checkout
-            - cache restore
-            - sem-version ruby 3.0.2
-            - bundle install --deployment --path vendor/bundle
+            - sem-version ruby 3.0.3
             - bin/quality
+
   - name: Tests
     task:
       prologue:
-        commands:
-          - checkout
-          - cache restore
+        commands: 
           - sem-service start postgres
-          - sem-version ruby 3.0.2
-          - bundle install --deployment --path vendor/bundle
+          - sem-version ruby 3.0.3
           - bundle exec rake db:setup
       jobs:
       - name: Unit

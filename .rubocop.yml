@@ -6,7 +6,7 @@ Rails:
   Enabled: true
 
 AllCops:
- TargetRubyVersion: 3.0.2
+ TargetRubyVersion: 3.0.3
  DisplayCopNames: true
  NewCops: enable
  Exclude: 
