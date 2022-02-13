@@ -1,0 +1,44 @@
+version: v1.0
+name: Task tracker
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+blocks:
+  - name: Setup
+    task:
+      jobs:
+        - name: bundle
+          commands:
+          - checkout
+          - cache restore
+          - sem-version ruby 3.0.2
+          - bundle install --deployment -j 4 --path vendor/bundle
+          - cache store
+  - name: Quality
+    task:
+      jobs:
+        - name: check style + security
+          commands:
+            - checkout
+            - cache restore
+            - sem-version ruby 3.0.2
+            - bundle install --deployment --path vendor/bundle
+            - bin/quality
+  - name: Tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - sem-service start postgres
+          - sem-version ruby 3.0.2
+          - bundle install --deployment --path vendor/bundle
+          - bundle exec rake db:setup
+      jobs:
+      - name: Unit
+        commands:
+          - 'bin/rspec --tag ~type:feature'
+      - name: Feature
+        commands:
+          - 'bin/rspec --tag type:feature'
