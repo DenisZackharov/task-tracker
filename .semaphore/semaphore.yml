@@ -11,11 +11,11 @@ global_job_config:
   env_vars:
     - name: RAILS_ENV
       value: test
-    - name: BUNDLE_ARGS
-      value: --deployment -j 4 --path vendor/bundle
   prologue:
     commands:
       - checkout
+      - cache restore
+      - bundle install
 
 blocks:
   - name: Setup
@@ -24,7 +24,7 @@ blocks:
       - name: bundle
         commands:
           - sem-version ruby 3.0.3
-          - bundle install ${BUNDLE_ARGS}
+          - bundle install
           - cache store
 
   - name: Quality
@@ -32,7 +32,6 @@ blocks:
       jobs:
       - name: quality
         commands:
-          - bundle install ${BUNDLE_ARGS}
           - sem-version ruby 3.0.3
           - bin/quality
 
@@ -41,7 +40,6 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 3.0.3
-          - bundle install ${BUNDLE_ARGS}
           - sem-service start postgres
           - bin/rails db:setup
       jobs:
