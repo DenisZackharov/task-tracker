@@ -13,6 +13,8 @@ global_job_config:
   env_vars:
     - name: RAILS_ENV
       value: test
+    - name: DATABASE_URL
+      value: 'postgresql://postgres@localhost/test?encoding=utf8'
   prologue:
     commands:
       - checkout
@@ -34,7 +36,7 @@ blocks:
       - name: quality
         commands:
           - sem-version ruby 3.0.3
-          - bundle install --local
+          - bundle install
           - bin/quality
 
   - name: Tests
@@ -43,7 +45,7 @@ blocks:
         commands:
           - sem-version ruby 3.0.3
           - sem-service start postgres
-          - bundle install --local
+          - bundle install
           - bin/rails db:setup
       jobs:
       - name: Unit
