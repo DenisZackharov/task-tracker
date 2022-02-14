@@ -16,7 +16,6 @@ global_job_config:
   prologue:
     commands:
       - checkout
-      - cache restore
 
 blocks:
   - name: Setup
