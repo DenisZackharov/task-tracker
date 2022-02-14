@@ -362,7 +362,6 @@ DEPENDENCIES
   capybara (>= 3.26)
   database_cleaner-active_record
   devise
-  digest (~> 3.0.0)
   dotenv-rails
   email_spec
   factory_bot_rails
