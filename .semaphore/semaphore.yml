@@ -1,0 +1,58 @@
+version: v1.0
+name: Task tracker
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+execution_time_limit:
+  hours: 1
+fail_fast:
+  stop:
+    when: 'true'
+global_job_config:
+  env_vars:
+    - name: RAILS_ENV
+      value: test
+    - name: DATABASE_URL
+      value: 'postgresql://postgres@localhost/test?encoding=utf8'
+    - name: BUNDLE_ARGS
+      value: '--deployment --without development staging production --jobs 4'
+  prologue:
+    commands:
+      - checkout
+      - cache restore
+
+blocks:
+  - name: Setup
+    task:
+      jobs:
+      - name: bundle
+        commands:
+          - sem-version ruby 3.0.3
+          - bundle install ${BUNDLE_ARGS}
+          - cache store
+
+  - name: Quality
+    task:
+      jobs:
+      - name: quality
+        commands:
+          - sem-version ruby 3.0.3
+          - bundle install ${BUNDLE_ARGS}
+          - bin/quality
+
+  - name: Tests
+    task:
+      prologue:
+        commands:
+          - sem-version ruby 3.0.3
+          - sem-service start postgres
+          - bundle install ${BUNDLE_ARGS}
+          - bin/rails db:setup
+      jobs:
+      - name: Unit
+        commands:
+          - 'bin/rspec --tag ~type:feature'
+      - name: Feature
+        commands:
+          - 'bin/rspec --tag type:feature'
