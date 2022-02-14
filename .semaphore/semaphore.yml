@@ -6,7 +6,9 @@ agent:
     os_image: ubuntu1804
 execution_time_limit:
   hours: 1
-
+fail_fast:
+  stop:
+    when: 'true'
 global_job_config:
   env_vars:
     - name: RAILS_ENV
@@ -15,7 +17,6 @@ global_job_config:
     commands:
       - checkout
       - cache restore
-      - bundle install
 
 blocks:
   - name: Setup
@@ -27,13 +28,14 @@ blocks:
           - bundle install
           - cache store
 
-  - name: Quality
-    task:
-      jobs:
-      - name: quality
-        commands:
-          - sem-version ruby 3.0.3
-          - bin/quality
+  # - name: Quality
+  #   task:
+  #     jobs:
+  #     - name: quality
+  #       commands:
+  #         - sem-version ruby 3.0.3
+  #         - bundle install --local
+  #         - bin/quality
 
   - name: Tests
     task:
@@ -41,6 +43,7 @@ blocks:
         commands:
           - sem-version ruby 3.0.3
           - sem-service start postgres
+          - bundle install --local
           - bin/rails db:setup
       jobs:
       - name: Unit
