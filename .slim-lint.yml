@@ -20,8 +20,6 @@ linters:
 
   RuboCop:
     enabled: true
-    # These cops are incredibly noisy since the Ruby we extract from Slim
-    # templates isn't well-formatted, so we ignore them.
     ignored_cops:
       - Layout/TrailingEmptyLines 
       - Lint/EndAlignment
