@@ -28,14 +28,14 @@ blocks:
           - bundle install
           - cache store
 
-  # - name: Quality
-  #   task:
-  #     jobs:
-  #     - name: quality
-  #       commands:
-  #         - sem-version ruby 3.0.3
-  #         - bundle install --local
-  #         - bin/quality
+  - name: Quality
+    task:
+      jobs:
+      - name: quality
+        commands:
+          - sem-version ruby 3.0.3
+          - bundle install --local
+          - bin/quality
 
   - name: Tests
     task:
