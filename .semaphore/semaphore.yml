@@ -38,7 +38,7 @@ blocks:
       - name: quality
         commands:
           - sem-version ruby 3.0.3
-          - bundle install {BUNDLE_ARGS}
+          - bundle install ${BUNDLE_ARGS}
           - bin/quality
 
   - name: Tests
@@ -47,7 +47,7 @@ blocks:
         commands:
           - sem-version ruby 3.0.3
           - sem-service start postgres
-          - bundle install {BUNDLE_ARGS}
+          - bundle install ${BUNDLE_ARGS}
           - bin/rails db:setup
       jobs:
       - name: Unit
