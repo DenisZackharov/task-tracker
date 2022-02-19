@@ -31,7 +31,7 @@ blocks:
             - 'bundle install ${BUNDLE_ARGS}'
             - cache store
       secrets:
-        - name: task-tracker
+        - name: heroku-http
   - name: Quality
     task:
       jobs:
