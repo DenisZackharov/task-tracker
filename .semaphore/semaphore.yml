@@ -21,38 +21,42 @@ global_job_config:
     commands:
       - checkout
       - cache restore
-
 blocks:
   - name: Setup
     task:
       jobs:
-      - name: bundle
-        commands:
-          - sem-version ruby 3.0.3
-          - bundle install ${BUNDLE_ARGS}
-          - cache store
-
+        - name: bundle
+          commands:
+            - sem-version ruby 3.0.3
+            - 'bundle install ${BUNDLE_ARGS}'
+            - cache store
+      secrets:
+        - name: heroku-http
   - name: Quality
     task:
       jobs:
-      - name: quality
-        commands:
-          - sem-version ruby 3.0.3
-          - bundle install ${BUNDLE_ARGS}
-          - bin/quality
-
+        - name: quality
+          commands:
+            - sem-version ruby 3.0.3
+            - 'bundle install ${BUNDLE_ARGS}'
+            - bin/quality
   - name: Tests
     task:
       prologue:
         commands:
           - sem-version ruby 3.0.3
           - sem-service start postgres
-          - bundle install ${BUNDLE_ARGS}
-          - bin/rails db:setup
+          - 'bundle install ${BUNDLE_ARGS}'
+          - 'bin/rails db:setup'
       jobs:
-      - name: Unit
-        commands:
-          - 'bin/rspec --tag ~type:feature'
-      - name: Feature
-        commands:
-          - 'bin/rspec --tag type:feature'
+        - name: Unit
+          commands:
+            - 'bin/rspec --tag ~type:feature'
+        - name: Feature
+          commands:
+            - 'bin/rspec --tag type:feature'
+promotions:
+  - name: Heroku deploy
+    pipeline_file: heroku.yml
+    auto_promote:
+      when: result = 'passed' and branch = 'master'
