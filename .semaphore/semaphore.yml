@@ -56,3 +56,9 @@ blocks:
       - name: Feature
         commands:
           - 'bin/rspec --tag type:feature'
+
+promotions:
+  - name: Heroku deploy
+  pipeline_file: heroku.yml
+  auto_promote:
+    when: "result = 'passed' and branch = 'master'"
