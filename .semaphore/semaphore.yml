@@ -59,6 +59,6 @@ blocks:
 
 promotions:
   - name: Heroku deploy
-  pipeline_file: heroku.yml
-  auto_promote:
-    when: "result = 'passed' and branch = 'master'"
+    pipeline_file: heroku.yml
+    auto_promote:
+      when: "result = 'passed' and branch = 'master'"
