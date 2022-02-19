@@ -11,12 +11,12 @@ blocks:
         - name: task-traker
       env_vars:
         - name: HEROKU_REMOTE
-          value: https://git.heroku.com/task-tracker-pet-project.git
+          value: 'https://git.heroku.com/task-tracker-pet-project.git'
         - name: HEROKU_APP_NAME
           value: task-tracker-pet-project
       jobs:
         - name: Push code
           commands:
             - checkout --use-cache
-            - heroku git:remote -a $HEROKU_APP_NAME
-            - git push heroku -f $SEMAPHORE_GIT_BRANCH:master
+            - 'heroku git:remote -a $HEROKU_APP_NAME'
+            - 'git push heroku -f $SEMAPHORE_GIT_BRANCH:master'
