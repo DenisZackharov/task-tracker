@@ -14,7 +14,6 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '0659e1357a16835b2e2fbc8681346e54734741700139f821922522591dd870acbb4228da1143cb76f9b66b2abe30df7630567bc030ba992068660843cc5b55f2'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -24,7 +23,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -36,7 +35,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -124,9 +123,6 @@ Devise.setup do |config|
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 12
-
-  # Set up a pepper to generate the hashed password.
-  # config.pepper = '5ce999a559c935ce685e93703820517ec8a9f254593da824e4c94f2787c63cae912d177f939e256ee58b813dee0fd4968ea0f62d636df9f8aea001b566fd30e9'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false

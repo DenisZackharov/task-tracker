@@ -7,10 +7,13 @@ gem "rails", "~> 7.0.0"
 gem "pg", "~> 1.1"
 
 gem "bootsnap", ">= 1.4.4", require: false
+gem "bootstrap", "~> 5.1.3"
 gem "bundler-audit", "~> 0.8.0"
 gem "brakeman"
+gem "capybara-email"
 gem "devise"
 gem "jbuilder", "~> 2.7"
+gem "jquery-rails"
 gem "puma", "~> 5.0"
 gem "rspec", "~> 3.10"
 gem "rubocop", require: false
@@ -20,6 +23,7 @@ gem "rubocop-rspec", require: false
 gem "sass-rails", ">= 6"
 gem "scss_lint", require: false
 gem "seedbank"
+gem "simple_form"
 gem "slim"
 gem "strong_migrations"
 gem "turbolinks", "~> 5"
