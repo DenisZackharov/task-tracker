@@ -27,7 +27,6 @@ blocks:
       jobs:
         - name: bundle
           commands:
-            - sem-version ruby 3.0.3
             - 'bundle install ${BUNDLE_ARGS}'
             - cache store
       secrets:
@@ -37,7 +36,6 @@ blocks:
       jobs:
         - name: quality
           commands:
-            - sem-version ruby 3.0.3
             - 'bundle install ${BUNDLE_ARGS}'
             - bin/quality
   - name: Tests
@@ -46,8 +44,8 @@ blocks:
         commands:
           - nvm use
           - sem-version ruby 3.0.3
-          - sem-service start postgres
           - 'bundle install ${BUNDLE_ARGS}'
+          - sem-service start postgres
           - 'bin/rails db:setup'
           - 'bin/rails assets:precompile'
       jobs:
