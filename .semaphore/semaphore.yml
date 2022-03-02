@@ -48,6 +48,7 @@ blocks:
           - sem-service start postgres
           - 'bundle install ${BUNDLE_ARGS}'
           - 'bin/rails db:setup'
+          - 'bin/rails assets:precompile'
       jobs:
         - name: Unit
           commands:
