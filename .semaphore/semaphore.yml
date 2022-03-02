@@ -44,6 +44,7 @@ blocks:
     task:
       prologue:
         commands:
+          - nvm use
           - sem-version ruby 3.0.3
           - sem-service start postgres
           - 'bundle install ${BUNDLE_ARGS}'
