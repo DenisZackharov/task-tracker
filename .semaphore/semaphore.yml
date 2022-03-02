@@ -42,12 +42,12 @@ blocks:
     task:
       prologue:
         commands:
-          - bundle exec rails webpacker:install
           - nvm use
           - sem-version ruby 3.0.3
           - 'bundle install ${BUNDLE_ARGS}'
           - sem-service start postgres
           - 'bin/rails db:setup'
+          - bundle exec rails webpacker:install
           - 'bin/rails assets:precompile'
       jobs:
         - name: Unit
