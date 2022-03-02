@@ -47,7 +47,6 @@ blocks:
           - 'bundle install ${BUNDLE_ARGS}'
           - sem-service start postgres
           - 'bin/rails db:setup'
-          - bundle exec rails webpacker:install
           - 'bin/rails assets:precompile'
       jobs:
         - name: Unit
