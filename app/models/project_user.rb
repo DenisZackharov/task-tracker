@@ -7,4 +7,5 @@ class ProjectUser < ApplicationRecord
   belongs_to :project
 
   enumerize :role, in: AVAILABLE_ROLES
+  validates :role, presence: :true
 end
