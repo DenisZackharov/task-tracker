@@ -3,7 +3,7 @@ require "rails_helper"
 feature "Sign In" do
 
   before do
-    FactoryBot.create(:user, email: "john.doe@example.com", password: "123456")
+    create(:user, email: "john.doe@example.com", password: "123456")
   end
 
   scenario "Visitor Sign in with valid credentials" do

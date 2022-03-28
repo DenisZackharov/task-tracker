@@ -10,13 +10,69 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_21_154312) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_21_131021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "comments", force: :cascade do |t|
+    t.text "text", null: false
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_comments_on_task_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "project_users", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.string "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_users_on_project_id"
+    t.index ["user_id"], name: "index_project_users_on_user_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_projects_on_name", unique: true
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "kind", null: false
+    t.string "state", null: false
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_reviews_on_task_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "state", default: "Unstarted", null: false
+    t.string "story_type", default: "feature", null: false
+    t.string "priority", default: "P3-Low", null: false
+    t.string "point", default: "Unestimated", null: false
+    t.bigint "project_id", null: false
+    t.bigint "owner_id"
+    t.bigint "requester_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_tasks_on_owner_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["requester_id"], name: "index_tasks_on_requester_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -33,4 +89,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_21_154312) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "tasks"
+  add_foreign_key "comments", "users"
+  add_foreign_key "project_users", "projects"
+  add_foreign_key "project_users", "users"
+  add_foreign_key "reviews", "tasks"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "users", column: "owner_id"
+  add_foreign_key "tasks", "users", column: "requester_id"
 end

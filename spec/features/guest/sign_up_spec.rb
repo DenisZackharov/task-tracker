@@ -1,9 +1,7 @@
 require "rails_helper"
 
 feature "Sign Up" do
-
   let(:user_email) { "denis.zaharov@flatstack.com" }
-  let(:registered_user) { User.find_by(email: user_email) }
 
   scenario "Visitor signs up" do
     visit new_user_registration_path
