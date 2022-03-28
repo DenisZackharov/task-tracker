@@ -1,7 +1,7 @@
 class ProjectUser < ApplicationRecord
   extend Enumerize
 
-  AVAILABLE_ROLES = %w[admin manager employee]
+  AVAILABLE_ROLES = %w[admin manager employee].freeze
 
   belongs_to :user
   belongs_to :project

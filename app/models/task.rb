@@ -17,5 +17,5 @@ class Task < ApplicationRecord
   enumerize :story_type, in: STORY_TYPES, default: "Feature"
   enumerize :priority, in: PRIORITIES, default: "P3 - Low"
   enumerize :point, in: KIND_OF_POINTS, default: "Unestimated"
-  validates :name, :story_type, :priority, presence: true
+  validates :name, :state, :story_type, :priority, :point, presence: true
 end
